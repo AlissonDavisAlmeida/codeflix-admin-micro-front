@@ -1,5 +1,5 @@
 import {
-  AppBar, IconButton, Toolbar, Box, Typography,
+  AppBar, IconButton, Toolbar, Box, Typography, Button,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { FC } from 'react';
@@ -10,6 +10,7 @@ export const Header: FC = () => {
       sx={{ flexGrow: 1 }}
 
     >
+
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -21,8 +22,12 @@ export const Header: FC = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div">
-            My App
+            CodeFlix
           </Typography>
+          <Box sx={{ flexGrow: 1 }} />
+          <Button>
+            LOGIN
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>
