@@ -1,17 +1,11 @@
-import { Typography } from '@mui/material';
 import { ThemeProvider, Box } from '@mui/system';
 import { Routes, Route } from 'react-router-dom';
 import { Header } from './components/header/Header';
 import { Layout } from './components/layout/Layout';
 import { appTheme } from './config/theme';
+import { CreateCategory, EditCategory } from './features/categories';
 
-const Home = () => {
-  return (
-    <Typography variant="h1" component="h1">
-      Home
-    </Typography>
-  );
-};
+import { ListCategory } from './features/categories/listCategory';
 
 function App() {
   return (
@@ -22,13 +16,19 @@ function App() {
         sx={{
           height: '100vh',
           backgroundColor: (theme) => theme.palette.grey[900],
+          color: '#fff',
         }}
       >
         <Header />
         <Layout>
 
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<ListCategory />} />
+            <Route path="/categories" element={<ListCategory />} />
+            <Route path="/categories/create" element={<CreateCategory />} />
+            <Route path="/categories/edit/:id" element={<EditCategory />} />
+
+            <Route path="*" element={<h1>Not Found</h1>} />
           </Routes>
         </Layout>
       </Box>

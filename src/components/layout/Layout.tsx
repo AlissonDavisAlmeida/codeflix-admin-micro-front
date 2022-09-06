@@ -15,7 +15,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         sx={{
           mt: 4,
           mb: 4,
-          color: '#000',
         }}
       >
 
