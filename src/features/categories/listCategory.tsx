@@ -1,7 +1,10 @@
+import DeleteIcon from '@mui/icons-material/Delete';
 import {
-  Box, Button, Link,
+  Box, Button, IconButton, Link, Typography,
 } from '@mui/material';
-import { GridRowsProp, DataGrid, GridColDef } from '@mui/x-data-grid';
+import {
+  GridRowsProp, DataGrid, GridColDef, GridRenderCellParams,
+} from '@mui/x-data-grid';
 import { useAppSelector } from '../../app/hooks';
 import { selectCategories } from './categorySlice';
 
@@ -13,13 +16,54 @@ export const ListCategory = () => {
       id: category.id,
       name: category.name,
       description: category.description,
+      is_active: category.is_active,
+      createdAt: new Date(category.created_at).toLocaleDateString('en-US'),
     };
   });
 
+  const renderIsActiveCell = (params: GridRenderCellParams<any, any, any>) => {
+    return (
+      <Typography color={params.value ? 'primary' : 'secondary'}>
+        {params.value ? 'Active' : 'Inactive'}
+      </Typography>
+    );
+  };
+
+  const renderActionsCell = (params: GridRenderCellParams<any, any, any>) => {
+    return (
+      <IconButton
+        color="secondary"
+        aria-label="delete"
+      >
+        <DeleteIcon />
+      </IconButton>
+    );
+  };
+
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 200 },
-    { field: 'name', headerName: 'Name', width: 200 },
-    { field: 'description', headerName: 'Description', width: 200 },
+    {
+      field: 'name',
+      headerName: 'Name',
+      flex: 1,
+    },
+    {
+      field: 'is_active',
+      headerName: 'Active',
+      flex: 1,
+      type: 'boolean',
+      renderCell: renderIsActiveCell,
+    },
+    {
+      field: 'createdAt',
+      headerName: 'Created At',
+      flex: 1,
+    },
+    {
+      field: 'id',
+      headerName: 'Actions',
+      flex: 1,
+      renderCell: renderActionsCell,
+    },
   ];
 
   return (
@@ -50,9 +94,6 @@ export const ListCategory = () => {
         </Button>
       </Box>
 
-      {/* {categories.map((category) => (
-        <Typography key={category.id}>{category.name}</Typography>
-      ))} */}
       <div style={{
         width: '100%',
       }}

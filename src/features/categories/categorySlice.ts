@@ -16,8 +16,8 @@ const categories: Category[] = [
   {
     id: 'a2fadf9c-7b9f-4b9f-8c9f-2f8b3dcb779e',
     name: 'Category 1',
-    is_active: true,
-    created_at: '2021-01-01',
+    is_active: false,
+    created_at: '2021-01-07',
     updated_at: '2021-01-01',
     deleted_at: null,
     description: 'Category 1 description',
