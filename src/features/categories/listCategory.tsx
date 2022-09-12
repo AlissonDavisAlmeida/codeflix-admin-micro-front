@@ -3,7 +3,11 @@ import {
   Box, Button, IconButton, Link, Typography,
 } from '@mui/material';
 import {
-  GridRowsProp, DataGrid, GridColDef, GridRenderCellParams,
+  GridRowsProp,
+  DataGrid,
+  GridColDef,
+  GridRenderCellParams,
+  GridToolbar,
 } from '@mui/x-data-grid';
 import { useAppSelector } from '../../app/hooks';
 import { selectCategories } from './categorySlice';
@@ -100,10 +104,23 @@ export const ListCategory = () => {
       >
 
         <DataGrid
+          components={{ Toolbar: GridToolbar }}
           rows={rows}
+          disableColumnSelector
+          disableColumnFilter
+          disableDensitySelector
+          disableSelectionOnClick
           columns={columns}
           autoHeight
           rowsPerPageOptions={[2, 10, 20, 50, 100]}
+          componentsProps={{
+            toolbar: {
+              showQuickFilter: true,
+              quickFiltersProps: {
+                debounceMs: 500,
+              },
+            },
+          }}
         />
       </div>
     </Box>
