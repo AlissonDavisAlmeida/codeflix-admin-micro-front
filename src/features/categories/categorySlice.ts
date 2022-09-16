@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 
-interface Category {
+export interface Category {
   id: string
   name: string
   is_active: boolean
@@ -51,5 +51,17 @@ const categorySlice = createSlice({
 });
 
 export const selectCategories = (state: RootState) => state.category;
+export const selectCategory = (state: RootState, id: string | undefined): Category | Omit<Category, 'created_at' | 'updated_at'> => {
+  const categoryFind = state.category.find((category) => category.id === id);
+
+  // eslint-disable-next-line consistent-return
+  return categoryFind || {
+    id: '',
+    name: '',
+    description: '',
+    is_active: false,
+    deleted_at: null,
+  };
+};
 
 export default categorySlice.reducer;

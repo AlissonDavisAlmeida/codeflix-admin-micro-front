@@ -44,11 +44,30 @@ export const ListCategory = () => {
     );
   };
 
+  const componentProps = {
+    toolbar: {
+      showQuickFilter: true,
+      quickFiltersProps: {
+        debounceMs: 500,
+      },
+    },
+  };
+
   const columns: GridColDef[] = [
     {
       field: 'name',
       headerName: 'Name',
       flex: 1,
+      renderCell: (params) => {
+        return (
+          <Link
+            underline="none"
+            href={`/categories/edit/${params.id}`}
+          >
+            <Typography color="primary">{params.value}</Typography>
+          </Link>
+        );
+      },
     },
     {
       field: 'is_active',
@@ -98,31 +117,20 @@ export const ListCategory = () => {
         </Button>
       </Box>
 
-      <div style={{
-        width: '100%',
-      }}
-      >
-
+      <Box sx={{ display: 'flex', height: 500 }}>
         <DataGrid
+          autoHeight
+          columns={columns}
           components={{ Toolbar: GridToolbar }}
-          rows={rows}
-          disableColumnSelector
           disableColumnFilter
+          disableColumnSelector
           disableDensitySelector
           disableSelectionOnClick
-          columns={columns}
-          autoHeight
+          rows={rows}
           rowsPerPageOptions={[2, 10, 20, 50, 100]}
-          componentsProps={{
-            toolbar: {
-              showQuickFilter: true,
-              quickFiltersProps: {
-                debounceMs: 500,
-              },
-            },
-          }}
+          componentsProps={componentProps}
         />
-      </div>
+      </Box>
     </Box>
   );
 };
