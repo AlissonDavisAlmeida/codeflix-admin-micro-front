@@ -9,11 +9,12 @@ import {
   GridRenderCellParams,
   GridToolbar,
 } from '@mui/x-data-grid';
-import { useAppSelector } from '../../app/hooks';
-import { selectCategories } from './categorySlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { deleteCategory, selectCategories } from './categorySlice';
 
 export const ListCategory = () => {
   const categories = useAppSelector(selectCategories);
+  const dispatch = useAppDispatch();
 
   const rows: GridRowsProp = categories.map((category) => {
     return {
@@ -38,6 +39,7 @@ export const ListCategory = () => {
       <IconButton
         color="secondary"
         aria-label="delete"
+        onClick={() => dispatch(deleteCategory(params.id as string))}
       >
         <DeleteIcon />
       </IconButton>

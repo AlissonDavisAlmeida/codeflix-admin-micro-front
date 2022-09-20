@@ -1,9 +1,10 @@
 import {
-  Box, Button, FormControl, FormControlLabel, FormGroup, Grid, Link, Switch, TextField,
+  Box, Button, FormControl, FormControlLabel, FormGroup, Grid, Switch, TextField,
 } from '@mui/material';
 import {
   ChangeEvent, FC, FormEvent,
 } from 'react';
+import { Link } from 'react-router-dom';
 import { Category } from '../categorySlice';
 
 type CategoryFormProps = {
@@ -25,8 +26,8 @@ export const CategoryForm: FC<CategoryFormProps> = ({
 }) => {
   return (
     <Box p={2}>
-      <form>
-        <Grid spacing={3}>
+      <form onSubmit={onSubmit}>
+        <Grid container spacing={3}>
           <Grid item xs={12}>
             <FormControl fullWidth>
               <TextField
@@ -80,7 +81,7 @@ export const CategoryForm: FC<CategoryFormProps> = ({
               <Button
                 variant="contained"
                 component={Link}
-                href="/categories"
+                to="/categories"
               >
                 Back
               </Button>

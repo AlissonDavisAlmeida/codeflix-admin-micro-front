@@ -1,10 +1,13 @@
-import { ChangeEventHandler, useState } from 'react';
+import {
+  ChangeEvent, ChangeEventHandler, FormEvent, useState,
+} from 'react';
 import {
   Box, Button, FormControl, FormControlLabel, FormGroup, Grid, Link, Paper, Switch, TextField, Typography,
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { useAppSelector } from '../../app/hooks';
-import { selectCategory } from './categorySlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { Category, selectCategory, updateCategory } from './categorySlice';
+import { CategoryForm } from './components/CategoryForm';
 
 export const EditCategory = () => {
   const { id } = useParams();
@@ -12,14 +15,26 @@ export const EditCategory = () => {
   const [isDisabled, setIsDisabled] = useState(false);
 
   const category = useAppSelector((state) => selectCategory(state, id));
+  const dispatch = useAppDispatch();
 
-  const handleChange = (event: any) => {
+  const [categoryState, setCategoryState] = useState<Category>(category as Category);
 
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    dispatch(updateCategory(categoryState));
   };
 
-  const handleToogle = (event: any) => {
-
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setCategoryState((prevState) => ({ ...prevState, [name]: value }));
   };
+
+  const handleToogle = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = event.target;
+    setCategoryState((prevState) => ({ ...prevState, [name]: checked }));
+  };
+
   return (
     <Box>
       <Paper>
@@ -29,16 +44,16 @@ export const EditCategory = () => {
           </Box>
         </Box>
 
-        <Box p={2}>
+        {/*  <Box p={2}>
           <form>
-            <Grid spacing={3}>
+            <Grid container spacing={3}>
               <Grid item xs={12}>
                 <FormControl fullWidth>
                   <TextField
                     required
                     name="name"
                     label="Name"
-                    value={category.name}
+                    value={categoryState.name}
                     disabled={isDisabled}
                     onChange={handleChange}
                   />
@@ -53,7 +68,7 @@ export const EditCategory = () => {
                     required
                     name="description"
                     label="Description"
-                    value={category.description}
+                    value={categoryState.description}
                     disabled={isDisabled}
                     onChange={handleChange}
                   />
@@ -70,7 +85,7 @@ export const EditCategory = () => {
                         name="is_active"
                         color="secondary"
                         onChange={handleToogle}
-                        checked={category.is_active}
+                        checked={categoryState.is_active}
                         inputProps={{ 'aria-label': 'controlled' }}
                       />
                     )}
@@ -106,7 +121,15 @@ export const EditCategory = () => {
             </Grid>
           </form>
         </Box>
-
+ */}
+        <CategoryForm
+          category={categoryState}
+          isDisabled={isDisabled}
+          isLoading={false}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          onToogle={handleToogle}
+        />
       </Paper>
     </Box>
   );

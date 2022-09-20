@@ -32,6 +32,7 @@
         "import/no-cycle": "off",
         "no-unused-vars": "warn",
         "@typescript-eslint/no-unused-vars": "warn",
-        "max-len": "off"
+        "max-len": "off",
+        "no-param-reassign":"off"
     }
 }
